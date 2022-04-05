@@ -20,7 +20,7 @@ const MonthlyExpenses = ({ navigation }) => {
         </View>
 
         {/* Form input fields */}
-        <View style={tw`px-4 py-10 flex-1`}>
+        <View style={tw`p-10 flex-1`}>
           <View style={tw`flex-row justify-between pt-4`}>
             <Text style={tw`text-xl font-semibold`}>Rent</Text>
             <Text style={tw`text-xl font-semibold`}> $500</Text>

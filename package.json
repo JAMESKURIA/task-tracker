@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.1",
     "expo": "~44.0.0",
@@ -19,6 +20,7 @@
     "react-native": "0.64.3",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
+    "react-native-storage": "^1.0.1",
     "react-native-web": "0.17.1",
     "rn-material-ui-textfield": "^1.0.6",
     "tailwind-react-native-classnames": "^1.5.1"
