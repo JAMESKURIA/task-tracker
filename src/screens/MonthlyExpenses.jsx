@@ -1,10 +1,17 @@
 import { View, Text, Image, ScrollView } from "react-native";
 import React from "react";
+import useStorage from "../hooks/useStorage";
 import tw from "tailwind-react-native-classnames";
-
 import Button from "../components/Button";
 
 const MonthlyExpenses = ({ navigation }) => {
+  const [myExpenses, setMyexpenses] = React.useState([]);
+  const { storage, state } = useStorage();
+
+  React.useEffect(() => {
+    setMyexpenses(state.expenses);
+  }, [state]);
+
   return (
     <View style={tw`flex-1`}>
       <ScrollView>
@@ -19,25 +26,28 @@ const MonthlyExpenses = ({ navigation }) => {
           </Text>
         </View>
 
-        {/* Form input fields */}
+        {/* Expenses listed here */}
         <View style={tw`p-10 flex-1`}>
-          <View style={tw`flex-row justify-between pt-4`}>
-            <Text style={tw`text-xl font-semibold`}>Rent</Text>
-            <Text style={tw`text-xl font-semibold`}> $500</Text>
-          </View>
-          <View style={tw`flex-row justify-between pt-4`}>
-            <Text style={tw`text-xl font-semibold`}>Groceries</Text>
-            <Text style={tw`text-xl font-semibold`}> $100</Text>
-          </View>
-          <View style={tw`flex-row justify-between pt-4`}>
-            <Text style={tw`text-xl font-semibold`}>Transportation</Text>
-            <Text style={tw`text-xl font-semibold`}> $60</Text>
-          </View>
-          <View style={tw`flex-row justify-between pt-4`}>
-            <Text style={tw`text-xl font-semibold`}>Phone Bills</Text>
-            <Text style={tw`text-xl font-semibold`}> $55</Text>
-          </View>
-
+          {myExpenses.length > 0 ? (
+            myExpenses.map((expense, idx) => (
+              <View
+                key={idx.toString()}
+                style={tw`flex-row justify-between pt-4`}
+              >
+                <Text style={tw`text-xl font-semibold`}>{expense.expense}</Text>
+                <Text style={tw`text-xl font-semibold`}>
+                  {" "}
+                  ${expense.amount}
+                </Text>
+              </View>
+            ))
+          ) : (
+            <View style={tw`flex-1 p-10`}>
+              <Text style={tw`font-semibold text-lg`}>
+                Oops! Currently no expenses to show
+              </Text>
+            </View>
+          )}
           {/* Button MonthlyExpensess */}
           <View style={tw`mt-20 mx-4 `}>
             <Button

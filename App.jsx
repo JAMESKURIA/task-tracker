@@ -1,18 +1,21 @@
-import { SafeAreaView, LogBox, KeyboardAvoidingView } from "react-native";
+import { SafeAreaView, LogBox, KeyboardAvoidingView, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import tw from "tailwind-react-native-classnames";
 import SafeViewAndroid from "./src/components/SafeViewAndroid";
-import { Navigator } from "./src/screens";
+import StorageProvider from "./src/components/StorageProvider";
+import Navigator from "./src/screens/Navigator";
 
 export default function App() {
   LogBox.ignoreAllLogs(true);
   return (
-    <NavigationContainer>
-      <KeyboardAvoidingView style={tw`flex-1`}>
+    <StorageProvider>
+      <NavigationContainer>
         <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, tw`flex-1`]}>
-          <Navigator />
+          <KeyboardAvoidingView style={tw`flex-1`}>
+            <Navigator />
+          </KeyboardAvoidingView>
         </SafeAreaView>
-      </KeyboardAvoidingView>
-    </NavigationContainer>
+      </NavigationContainer>
+    </StorageProvider>
   );
 }

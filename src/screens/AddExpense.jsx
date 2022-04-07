@@ -1,16 +1,70 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import tw from "tailwind-react-native-classnames";
 import { TextField } from "rn-material-ui-textfield";
 import Button from "../components/Button";
+import useStorage from "../hooks/useStorage";
+import uuid from "uuid-random";
+import { ACTIONS } from "../utils/actions";
 
 const AddExpense = ({ navigation }) => {
   const [expense, setExpense] = React.useState("");
-  const [amount, setAmount] = React.useState();
+  const [amount, setAmount] = React.useState(null);
+
+  const { state, storage, dispatch } = useStorage();
 
   // Handle Add
   const handleAdd = () => {
-    // TODO: Handle add logic here
+    //  Handle add logic here
+
+    if (!expense || !amount) {
+      Alert.alert("Caution!", "Please fill in all the fields");
+      return;
+    }
+
+    // Save item function
+    const saveItem = () => {
+      Alert.alert(
+        "Confirm Add!",
+        ` Expense:  ${expense} \n Amount: ${amount} ?`,
+        [
+          {
+            text: "Ok",
+            onPress: () => {
+              storage.save({
+                key: "expense",
+                id: `${uuid()}`,
+                data: {
+                  email: state.email,
+                  expense,
+                  amount,
+                },
+              });
+
+              dispatch({
+                type: ACTIONS.expenses,
+                payload: [
+                  ...state.expenses,
+                  {
+                    email: state.email,
+                    expense,
+                    amount,
+                  },
+                ],
+              });
+              Alert.alert("Success!", `Successfuly added`);
+            },
+            style: "OK",
+          },
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+        ]
+      );
+    };
+
+    saveItem();
   };
 
   return (
@@ -20,7 +74,7 @@ const AddExpense = ({ navigation }) => {
         style={[tw`self-center my-8`, { height: 20 }]}
       />
       <View style={tw`px-4`}>
-        <Text style={tw`font-semibold text-xl `}> Hi Mustack</Text>
+        <Text style={tw`font-semibold text-xl `}> Hi {state.username}</Text>
         <Text style={tw`font-semibold text-xs px-2  pt-2`}>
           Add Your Expenses Here
         </Text>
@@ -36,11 +90,11 @@ const AddExpense = ({ navigation }) => {
         <TextField
           label="Amount"
           value={amount}
-          secureTextEntry
+          keyboardType="numeric"
           onChangeText={(text) => setAmount(text)}
         />
         {/* Button AddExpenses */}
-        <View style={tw`mt-20 mx-4 absolute bottom-20 mx-4 w-full `}>
+        <View style={tw`mt-20 mx-4 `}>
           <Button text="add" style={tw`mb-4`} onPress={handleAdd} />
           <TouchableOpacity onPress={() => navigation.navigate("Expenses")}>
             <Text style={tw`text-center`}>Show Expenses</Text>
