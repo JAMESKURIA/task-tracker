@@ -70,9 +70,25 @@ const Income = ({ navigation }) => {
           if (!containsObj(state.email, incomes)) {
             saveItem();
           } else {
-            console.log("Update here!");
-
             // User already exists - TODO: update
+            const myIncome = incomes.filter(
+              (income) => income.email.toString() === state.email.toLowerCase()
+            )[0];
+
+            storage.getIdsForKey("income").then((ids) => {
+              const myId = ids[incomes.indexOf(myIncome)];
+
+              // remove current income
+              storage.remove({
+                key: "income",
+                id: myId,
+              });
+
+              // Save new income
+              saveItem();
+            });
+
+            // console.log("My Income: ", myIncome);
             // return;
           }
         }

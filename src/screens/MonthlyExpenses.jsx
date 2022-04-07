@@ -22,7 +22,7 @@ const MonthlyExpenses = ({ navigation }) => {
         <View style={tw`px-4`}>
           <Text style={tw`font-semibold text-xl `}>Hi Mustack</Text>
           <Text style={tw`font-semibold text-xs  pt-2`}>
-            Add Your Expenses Here
+            Here is all your Monthly Expenses
           </Text>
         </View>
 
