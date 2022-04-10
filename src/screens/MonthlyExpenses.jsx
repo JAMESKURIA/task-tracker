@@ -6,7 +6,7 @@ import Button from "../components/Button";
 
 const MonthlyExpenses = ({ navigation }) => {
   const [myExpenses, setMyexpenses] = React.useState([]);
-  const { storage, state } = useStorage();
+  const { state } = useStorage();
 
   React.useEffect(() => {
     setMyexpenses(state.expenses);
@@ -20,7 +20,7 @@ const MonthlyExpenses = ({ navigation }) => {
           style={[tw`self-center my-8`, { height: 20 }]}
         />
         <View style={tw`px-4`}>
-          <Text style={tw`font-semibold text-xl `}>Hi Mustack</Text>
+          <Text style={tw`font-semibold text-xl `}>Hi {state.username}</Text>
           <Text style={tw`font-semibold text-xs  pt-2`}>
             Here is all your Monthly Expenses
           </Text>
