@@ -29,6 +29,10 @@ const AddExpense = ({ navigation }) => {
         ` Expense:  ${expense} \n Amount: ${amount} ?`,
         [
           {
+            text: "Cancel",
+            style: "cancel",
+          },
+          {
             text: "Ok",
             onPress: () => {
               storage.save({
@@ -52,13 +56,13 @@ const AddExpense = ({ navigation }) => {
                   },
                 ],
               });
+
               Alert.alert("Success!", `Successfuly added`);
+
+              setExpense(null);
+              setAmount(null);
             },
             style: "OK",
-          },
-          {
-            text: "Cancel",
-            style: "cancel",
           },
         ]
       );
